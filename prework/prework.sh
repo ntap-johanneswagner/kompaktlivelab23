@@ -39,7 +39,7 @@ echo "##########################################################################
 echo "Creating Backends with kubectl"
 echo "#######################################################################################################"
 
-cd /home/user/kompaktlivelab23
+cd /home/user/kompaktlivelab23/prework/
 
 kubectl create -n trident -f secret_ontap_nfs-svm_username.yaml
 kubectl create -n trident -f secret_ontap_iscsi-svm_chap.yaml

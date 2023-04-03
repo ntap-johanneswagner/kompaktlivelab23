@@ -36,7 +36,7 @@ You should now have several directories available. The lab is structured with di
 Please run the following commands:
 
 ```console
-cd /root/storagews/prework
+cd /home/user/kompaktlivelab23/prework
 sh prework.sh
 ```
 
