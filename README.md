@@ -27,8 +27,6 @@ password: *Netapp1!*
 <span style="color:green">***prepare a git repo for your workshop and use it below***</span>
 ```console
 cd /home/user
-mkdir kompaktlivelab23
-cd kompaktlivelab23
 git clone https://github.com/ntap-johanneswagner/kompaktlivelab23
 ```
 
