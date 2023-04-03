@@ -26,7 +26,7 @@ password: *Netapp1!*
 5. We've prepared some exercises for you that are hosted in a github repo. To have them available on your training environment, please create a directory, enter it and clone the repo with the following commands:  
 <span style="color:green">***prepare a git repo for your workshop and use it below***</span>
 ```console
-cd /root
+cd /home/user
 mkdir kompaktlivelab23
 cd kompaktlivelab23
 git clone https://github.com/ntap-johanneswagner/kompaktlivelab23
