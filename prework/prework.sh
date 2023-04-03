@@ -12,18 +12,15 @@ echo "##########################################################################
 echo "Add Region & Zone labels to Kubernetes nodes"
 echo "#######################################################################################################"
 
-kubectl label node rhel1 "topology.kubernetes.io/region=west" --overwrite
-kubectl label node rhel2 "topology.kubernetes.io/region=west" --overwrite
-kubectl label node rhel3 "topology.kubernetes.io/region=east" --overwrite
+kubectl label node worker1.rke1.demo.netapp.com "topology.kubernetes.io/region=west" --overwrite
+kubectl label node worker2.rke1.demo.netapp.com "topology.kubernetes.io/region=west" --overwrite
+kubectl label node worker3.rke1.demo.netapp.com "topology.kubernetes.io/region=east" --overwrite
 
-kubectl label node rhel1 "topology.kubernetes.io/zone=west1" --overwrite
-kubectl label node rhel2 "topology.kubernetes.io/zone=west1" --overwrite
-kubectl label node rhel3 "topology.kubernetes.io/zone=east1" --overwrite
+kubectl label node worker1.rke1.demo.netapp.com "topology.kubernetes.io/zone=west1" --overwrite
+kubectl label node worker2.rke1.demo.netapp.com "topology.kubernetes.io/zone=west1" --overwrite
+kubectl label node worker3.rke1.demo.netapp.com "topology.kubernetes.io/zone=east1" --overwrite
 
-if [ $(kubectl get nodes | wc -l) = 5 ]; then
-  kubectl label node rhel4 "topology.kubernetes.io/region=east"
-  kubectl label node rhel4 "topology.kubernetes.io/zone=east1"
-fi      
+
 echo "#######################################################################################################"
 echo "Make tridentctl working"
 echo "#######################################################################################################"
@@ -34,22 +31,6 @@ wget https://github.com/NetApp/trident/releases/download/v22.10.0/trident-instal
 tar -xf trident-installer-22.10.0.tar.gz
 rm -f /usr/bin/tridentctl
 cp trident-installer/tridentctl /usr/bin/
-
-echo "#######################################################################################################"
-echo "Install new Trident Operator (22.10.0) with Helm"
-echo "#######################################################################################################"
-
-
-echo "#######################################################################################################"
-echo "Check"
-echo "#######################################################################################################"
-
-frames="/ | \\ -"
-while [ $(kubectl get -n trident pod | grep Running | wc -l) -ne 5 ]; do
-    for frame in $frames; do
-        sleep 0.5; printf "\rWaiting for Trident to be ready $frame" 
-    done
-done
 
 echo
 tridentctl -n trident version
