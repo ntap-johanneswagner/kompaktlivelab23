@@ -27,9 +27,9 @@ password: *Netapp1!*
 <span style="color:green">***prepare a git repo for your workshop and use it below***</span>
 ```console
 cd /root
-mkdir storagews
-cd storagews
-git clone yourgithubrepohere
+mkdir kompaktlivelab23
+cd kompaktlivelab23
+git clone https://github.com/ntap-johanneswagner/kompaktlivelab23
 ```
 
 You should now have several directories available. The lab is structured with different scenarios. Everything you need is placed in a folder with the same name. 
