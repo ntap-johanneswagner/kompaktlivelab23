@@ -30,7 +30,7 @@ mkdir 22.10.0 && cd 22.10.0
 wget https://github.com/NetApp/trident/releases/download/v22.10.0/trident-installer-22.10.0.tar.gz
 tar -xf trident-installer-22.10.0.tar.gz
 rm -f /usr/bin/tridentctl
-cp trident-installer/tridentctl /usr/bin/
+sudo cp trident-installer/tridentctl /usr/bin/
 
 echo
 tridentctl -n trident version
