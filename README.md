@@ -1,14 +1,14 @@
 # :trident: Everything you always wanted to know about storage in Kubernetes (But were too afraid to ask) 
 
 # Introduction
-
-
-You will work in the NetApp Lab on Demand environment, but we`ve prepared some more resources for you than the typical lab guide offers. Before you can start, there are some preparations to do.
-
 You will connect to a Windows jumphost from which you can access the training environment.  
 It will provide you a K8s cluster version 1.22.3, a preconfigured storage system and the CSI driver we will use to demonstrate you how easy it is to use persistent storage in K8s.
 
-## Preparation
+Sie werden im NetApp Lab on Demand arbeiten, wir haben jedoch etwas mehr Ressourcen vorbereitet als der typische Lab Leitfaden bietet. Bevor Sie beginnen können, ist etwas Vorarbeit zu erledigen.
+
+Sie werden sich auf einen Linux Jumphost verbinden, von dem aus Sie die gesamte Trainingsumgebung steuern können.
+Für dieses NetApp Kompakt LiveLab stehen Ihnen zwei Kubernetes Cluster mit je drei Worker Nodes zur Verfügung. Trident ist bereits vorinstalliert, ebenso stehen zwei ONTAP Storagecluster bereit.
+## Vorarbeit
 
 1. Plesase choose a username from the following document:  
 <span style="color:green">***Prepare a document with the usernames you recieved from the LoD Team and place a link here***</span>
@@ -39,7 +39,7 @@ Please run the following commands:
 cd /home/user/kompaktlivelab23/prework
 sh prework.sh
 ```
-
+***Es wird die Eingabe des Passworts für "user" verlangt. Dieses lautet "Netapp1!".***
 # :trident: Scenario 01 - storage classes, persistent volumes & persistent volume claims 
 ____
 **Remember: All required files are in the folder */root/storagews/scenario01* please ensure that you are in this folder now. You can do this with the command** 
