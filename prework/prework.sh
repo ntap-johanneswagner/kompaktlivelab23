@@ -1,5 +1,6 @@
 #!/bin/bash
-
+alias rke1='export KUBECONFIG=/home/user/kubeconfigs/rke1/kube_config_cluster.yml'
+alias rke2='export KUBECONFIG=/home/user/kubeconfigs/rke2/kube_config_cluster.yml'
 
 if [[ $(yum info jq -y 2> /dev/null | grep Repo | awk '{ print $3 }') != "installed" ]]; then
     echo "#######################################################################################################"
