@@ -9,4 +9,5 @@ parameters:
   fsType: "ext4"
 mountOptions:
    - discard
+reclaimPolicy: Retain
 allowVolumeExpansion: true

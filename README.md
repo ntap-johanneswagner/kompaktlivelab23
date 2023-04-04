@@ -28,13 +28,14 @@ git clone https://github.com/ntap-johanneswagner/kompaktlivelab23
 You should now have several directories available. The lab is structured with different scenarios. Everything you need is placed in a folder with the same name. 
 
 6. As this lab is used for different things and has a lot of stuff in it that might be confusing, please run this little cleanup script which removes all things you don't need in this workshop, updates the environment to a recent version and creates some necessary stuff.   
-Please run the following commands:
+Please run the following commands:  
+**You will be asked to enter the password for user during the script. It is "Netapp1!"**
 
 ```console
 cd /home/user/kompaktlivelab23/prework
 bash prework.sh
 ```
-***Es wird die Eingabe des Passworts für "user" verlangt. Dieses lautet "Netapp1!".***
+
 # :trident: Scenario 01 - storage classes, persistent volumes & persistent volume claims 
 ____
 **Remember: All required files are in the folder */home/user/kompaktlivelab23/scenario01* please ensure that you are in this folder now. You can do this with the command** 
@@ -50,14 +51,27 @@ The backends in this environment are allready created. Take a brief moment to re
 ```console
 kubectl get tbe -n trident
 ```
+Let's see what StorageClasses have already in the cluster 
 
-First let's create two StorageClasses. We've already prepared the necessary files. There is one StorageClass prepared for the *nas* backend and one for *san*.
+```console
+kubectl get sc
+```
 
-The file you will use for *nas* is called *sc-csi-ontap-nas.yaml*  
+It will show you that you have already one storageclas calles sc-nas-svm1. 
+
+You can have a closer look into the details with the following command:
+
+```console
+kubectl describe sc sc-nas-svm1
+```
+
+Now let's create two further StorageClasses. We've already prepared the necessary files. There is one StorageClass prepared for the *san*  and one for *san-economy*.
+
+The file you will use for *san* is called *rke1_sc_san.yaml*  
 The command...
 
 ```console
-cat sc-csi-ontap-nas.yaml
+cat rke1_sc_san.yaml
 ```
 
 ...will provide you the following output of the file:
@@ -66,25 +80,29 @@ cat sc-csi-ontap-nas.yaml
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: storage-class-nas
+  name: sc-san-svm1
   annotations:
-    storageclass.kubernetes.io/is-default-class: "true"
+  storageclass.kubernetes.io/is-default-class: "true"
 provisioner: csi.trident.netapp.io
 parameters:
-  backendType: "ontap-nas"
-allowVolumeExpansion: true 
+  backendType: "ontap-san"
+  storagePools: "svm1-san:aggr1_cluster1_02"
+  fsType: "ext4"
+mountOptions:
+   - discard
+allowVolumeExpansion: true
 ```
 
 You can see the following:
 1. This StorageClass will be the default in this cluster (see "annotations")
 2. NetApp Astra Trident is responsible for the provisioning of PVCs with this storage class (see "provisioner")
-3. There are some parameters needed for this provisioner. In our case we have to tell them the backend type (e.g. nas, san).
+3. There are some parameters needed for this provisioner. In our case we have to tell them the backend type (e.g. nas, san), storagepools and fstype.
 4. This volume can be expanded after it's creation.
 
-Now let's compare with the one for *san*:
+Now let's compare with the one for *san-eco*:
 
 ```console
-cat sc-csi-ontap-san.yaml
+cat rke1-sc-saneco.yaml
 ```
 
 You get a similar output here:
@@ -93,10 +111,11 @@ You get a similar output here:
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: storage-class-san
+  name: sc-san-eco-svm1
 provisioner: csi.trident.netapp.io
 parameters:
-  backendType: "ontap-san"
+  backendType: "ontap-san-economy"
+  storagePools: "svm1-san-eco:aggr1_cluster1_02"
   fsType: "ext4"
 mountOptions:
    - discard
@@ -105,7 +124,7 @@ allowVolumeExpansion: true
 ```
 
 The biggest differences are: 
-1. As you are now asking for a block device, you will need a file system on it to make it usable. *ext4* is specified here (look at fsType in parameters section)
+1. We will now use the ontap-san-economy driver. While the ontap-san driver creates one flexvol per lun (persistent volume), the ontap-san-economy will place many luns (persistent volumes) in one flexvol.
 2. A reclaim policy is specified. We will come back to this later.
 
 If you want to dive into the whole concept of StorageClasses, this is well documented here: https://kubernetes.io/docs/concepts/storage/storage-classes/
@@ -113,23 +132,17 @@ If you want to dive into the whole concept of StorageClasses, this is well docum
 After all this theory, let's just add the StoraceClasses to your cluster:
 
 ```console
-kubectl apply -f sc-csi-ontap-nas.yaml
-kubectl apply -f sc-csi-ontap-san.yaml 
+kubectl apply -f rke1_sc_san.yaml
+kubectl apply -f rke1-sc-saneco.yaml
 ```
 
-You can discover all existing StorageClasses with a simple command:
+verify that you have now three StorageClasses:
 
 ```console
 kubectl get sc
 ```
 
 If you want to see more details a *describe* will provide them. Let's do this
-
-```console
-kubectl describe sc storage-class-nas
-```
-
-The output shows you all details. Remember, we haven't specified a *reclaimPolicy* for this class. Therefore the default vaule of *Delete* can be observed in the output. Again, we will explain what this means later.
 
 ## 2. PVCs & PVs
 
