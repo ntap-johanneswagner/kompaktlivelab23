@@ -228,9 +228,9 @@ kubectl get pvc -n funwithpvcs
 
 
 ```sh
-    NAME        STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                AGE
-    firstpvc    Bound    pvc-eb00c989-fddb-4224-aa56-a8918064b9fb   5Gi        RWO            sc-san-svm1           16m
-    secondpvc   Bound    pvc-50f6c56b-3575-43b3-ae16-5b99b35d9a59   5Gi        RWX            sc-nas-svm1           8s
+NAME        STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS      AGE
+firstpvc    Bound    pvc-542ed6d9-6df6-4d00-8bea-57f0de4999ad   5Gi        RWO            sc-san-eco-svm1   4m15s
+secondpvc   Bound    pvc-e3ec31a7-abf4-4223-a12d-3fc674e03cb9   5Gi        RWX            sc-nas-svm1       12s
 ```
 
 Earlier we mentioned that a *PersistentVolume* is also created. Maybe you ask yourself where to see them. It is pretty easy, let's have a look at our recently created ones:
@@ -240,9 +240,25 @@ kubectl get pv
 ```
 
 ```sh
-    NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                   STORAGECLASS        REASON   AGE
-    pvc-0e860943-3fae-4dae-80e9-82e2259089c8   5Gi        RWX            Delete           Bound    funwithpvcs/secondpvc   sc-san-svm1            99s
-    pvc-4adaf625-fc86-42e8-a481-92b02addfdbc   5Gi        RWO            Retain           Bound    funwithpvcs/firstpvc    sc-nas-svm1            2m43s
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                                                       STORAGECLASS      REASON   AGE
+pvc-2a044a6e-58fa-49c1-aa0b-6b37f15bd250   50Gi       RWO            Delete           Bound    netapp-acc/influxdb2                                        sc-nas-svm1                367d
+pvc-354483f6-45e6-46ea-b4fb-8378976b7ba8   50Gi       RWO            Delete           Bound    netapp-acc/datadir-polaris-mongodb-0                        sc-nas-svm1                367d
+pvc-542ed6d9-6df6-4d00-8bea-57f0de4999ad   5Gi        RWO            Retain           Bound    funwithpvcs/firstpvc                                        sc-san-eco-svm1            7m18s
+pvc-6af6429c-c42f-45bc-b470-4ce4c6e2bc11   50Gi       RWO            Delete           Bound    netapp-acc/datadir-polaris-mongodb-2                        sc-nas-svm1                367d
+pvc-89b16434-2f22-4f1d-ad6c-8b8931e2e0e8   8Gi        RWO            Delete           Bound    jenkins/jenkins                                             sc-nas-svm1                215d
+pvc-94bf74cd-3d3f-4043-8c27-9c595b68c6d2   10Gi       RWO            Delete           Bound    netapp-acc/data-netapp-acc-polaris-consul-consul-server-0   sc-nas-svm1                367d
+pvc-9889a8b7-33e1-4f99-bec8-21704d8d02db   8Gi        RWO            Delete           Bound    wordpress/data-wordpress-mariadb-0                          sc-nas-svm1                367d
+pvc-a7570ce6-a485-4288-8d84-ef8914d62e50   10Gi       RWO            Delete           Bound    netapp-acc/data-netapp-acc-polaris-consul-consul-server-1   sc-nas-svm1                367d
+pvc-a9973c15-7d54-42a2-b88f-918b5dc309db   50Gi       RWO            Delete           Bound    netapp-acc/asup-pv-claim                                    sc-nas-svm1                367d
+pvc-aae8cc7c-f6b2-4c20-ae84-929debb3e13b   50Gi       RWO            Delete           Bound    netapp-acc/datadir-polaris-mongodb-1                        sc-nas-svm1                367d
+pvc-b6b8f0e9-2b2e-40cb-8a8f-3a73a31b34a6   50Gi       RWO            Delete           Bound    netapp-acc/storage-loki-0                                   sc-nas-svm1                367d
+pvc-d5d3822e-f493-43cd-b50a-869bd4f622cb   10Gi       RWO            Delete           Bound    wordpress/wordpress                                         sc-nas-svm1                215d
+pvc-dda6faaf-eceb-4c07-ac44-f1502187a692   8Gi        RWO            Delete           Bound    netapp-acc/data-polaris-keycloak-db-0                       sc-nas-svm1                120d
+pvc-e3ec31a7-abf4-4223-a12d-3fc674e03cb9   5Gi        RWX            Delete           Bound    funwithpvcs/secondpvc                                       sc-nas-svm1                3m17s
+pvc-eb9d6fa7-dde3-4526-8d46-c503d1fe2f0c   10Gi       RWO            Delete           Bound    netapp-acc/data-netapp-acc-polaris-consul-consul-server-2   sc-nas-svm1                367d
+pvc-ede1a348-b4e8-4d75-9eb3-dd28cb9b652f   8Gi        RWO            Delete           Bound    netapp-acc/data-polaris-keycloak-db-1                       sc-nas-svm1                120d
+pvc-fc0402b9-37c8-49ca-8333-66d35642f984   8Gi        RWO            Delete           Bound    netapp-acc/data-polaris-keycloak-db-2                       sc-nas-svm1                120d
+
 ```
 
 You remember the ReclaimPolicy we definied in our StorageClass? We can see here that pur PVs have different policies. Let's delete both PVCs and see what happens.
