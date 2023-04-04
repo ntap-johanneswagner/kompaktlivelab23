@@ -3,13 +3,6 @@ shopt -s expand_aliases
 alias rke1='export KUBECONFIG=/home/user/kubeconfigs/rke1/kube_config_cluster.yml'
 alias rke2='export KUBECONFIG=/home/user/kubeconfigs/rke2/kube_config_cluster.yml'
 
-if [[ $(yum info jq -y 2> /dev/null | grep Repo | awk '{ print $3 }') != "installed" ]]; then
-    echo "#######################################################################################################"
-    echo "Install JQ"
-    echo "#######################################################################################################"
-    yum install -y jq
-fi
-
 echo "#######################################################################################################"
 echo "Add Region & Zone labels to Kubernetes nodes"
 echo "#######################################################################################################"
@@ -31,7 +24,7 @@ cd
 mkdir 22.10.0 && cd 22.10.0
 wget https://github.com/NetApp/trident/releases/download/v22.10.0/trident-installer-22.10.0.tar.gz
 tar -xf trident-installer-22.10.0.tar.gz
-rm -f /usr/bin/tridentctl
+sudo rm -f /usr/bin/tridentctl
 sudo cp trident-installer/tridentctl /usr/bin/
 
 echo
@@ -165,7 +158,9 @@ echo "##########################################################################
 echo
 
 rke2
-tridentctl -n trident create backend -f rke2_trident_svm1_san_backend.json
-tridentctl -n trident create backend -f rke2_trident_svm1_san_eco_backend.json
+tridentctl -n trident create backend -f rke2_trident_svm2_san_backend.json
+tridentctl -n trident create backend -f rke2_trident_svm2_san_eco_backend.json
 kubectl create -f rke2_sc_san.yaml
 kubectl create -f rke2_sc_saneco.yaml
+
+rke1
