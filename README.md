@@ -142,7 +142,11 @@ verify that you have now three StorageClasses:
 kubectl get sc
 ```
 
-Note, your default storageclass has changed to 
+Note, as we defined the the sc-san-svm1 as default StorageClass, we now have two default StorageClasses which is not a good state and it is still a bug in k8s that this can happen. To specify the right one as default, we have to set one to false again. This can be done by the following command:  
+
+```console
+kubectl patch storageclass sc-san-svm1 -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
+```
 
 If you want to see more details a *describe* will provide them. Let's do this
 
