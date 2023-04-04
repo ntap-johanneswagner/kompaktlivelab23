@@ -82,7 +82,7 @@ kind: StorageClass
 metadata:
   name: sc-san-svm1
   annotations:
-  storageclass.kubernetes.io/is-default-class: "true"
+    storageclass.kubernetes.io/is-default-class: "true"
 provisioner: csi.trident.netapp.io
 parameters:
   backendType: "ontap-san"
@@ -102,7 +102,7 @@ You can see the following:
 Now let's compare with the one for *san-eco*:
 
 ```console
-cat rke1-sc-saneco.yaml
+cat rke1_sc_saneco.yaml
 ```
 
 You get a similar output here:
@@ -133,7 +133,7 @@ After all this theory, let's just add the StoraceClasses to your cluster:
 
 ```console
 kubectl apply -f rke1_sc_san.yaml
-kubectl apply -f rke1-sc-saneco.yaml
+kubectl apply -f rke1_sc_saneco.yaml
 ```
 
 verify that you have now three StorageClasses:
@@ -141,6 +141,8 @@ verify that you have now three StorageClasses:
 ```console
 kubectl get sc
 ```
+
+Note, your default storageclass has changed to 
 
 If you want to see more details a *describe* will provide them. Let's do this
 
