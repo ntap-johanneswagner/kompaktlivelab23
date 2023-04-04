@@ -16,6 +16,8 @@ https://lod-bootcamp.netapp.com
 
 3. Request the lab *Cloud-native Applications with Astra Control Center v1.3* and connect to the jumphost 
 
+4. Open a terminal    
+
 4. We've prepared some exercises for you that are hosted in a github repo. To have them available on your training environment, please create a directory, enter it and clone the repo with the following commands:  
 <span style="color:green">***prepare a git repo for your workshop and use it below***</span>
 ```console
