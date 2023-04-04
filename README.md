@@ -1,29 +1,22 @@
 # :trident: Everything you always wanted to know about storage in Kubernetes (But were too afraid to ask) 
 
 # Introduction
-You will connect to a Windows jumphost from which you can access the training environment.  
-It will provide you a K8s cluster version 1.22.3, a preconfigured storage system and the CSI driver we will use to demonstrate you how easy it is to use persistent storage in K8s.
+You will work in the NetApp Lab on Demand environment, but we`ve prepared some more resources for you than the typical lab guide offers. Before you can start, there are some preparations to do.
 
-Sie werden im NetApp Lab on Demand arbeiten, wir haben jedoch etwas mehr Ressourcen vorbereitet als der typische Lab Leitfaden bietet. Bevor Sie beginnen können, ist etwas Vorarbeit zu erledigen.
+You will connect to a Linux jumphost from which you can access the training environment.
+It will provide you two K8s clusters, two ONTAP Clusters,Tridend with preconfigured backend and a preconfigured nas storageclass.
+## Prework
 
-Sie werden sich auf einen Linux Jumphost verbinden, von dem aus Sie die gesamte Trainingsumgebung steuern können.
-Für dieses NetApp Kompakt LiveLab stehen Ihnen zwei Kubernetes Cluster mit je drei Worker Nodes zur Verfügung. Trident ist bereits vorinstalliert, ebenso stehen zwei ONTAP Storagecluster bereit.
-## Vorarbeit
-
-1. Plesase choose a username from the following document:  
+# !!!!!!1. Wie wollen wir den Benutzernamen verteilen????:  
 <span style="color:green">***Prepare a document with the usernames you recieved from the LoD Team and place a link here***</span>
 
 2. Access the lab environment:  
 https://lod-bootcamp.netapp.com  
 <span style="color:red">Please ignore the Lab Guide that is provided there and use this one</span>
 
-3. Request the lab *Using Trident with Kubernetes and ONTAP v5.0* and connect to the jumphost 
+3. Request the lab *Cloud-native Applications with Astra Control Center v1.3* and connect to the jumphost 
 
-4. Open *Putty* and connect to the host *rhel3* with the following credentials:  
-username: *root*   
-password: *Netapp1!*
-
-5. We've prepared some exercises for you that are hosted in a github repo. To have them available on your training environment, please create a directory, enter it and clone the repo with the following commands:  
+4. We've prepared some exercises for you that are hosted in a github repo. To have them available on your training environment, please create a directory, enter it and clone the repo with the following commands:  
 <span style="color:green">***prepare a git repo for your workshop and use it below***</span>
 ```console
 cd /home/user
@@ -37,14 +30,14 @@ Please run the following commands:
 
 ```console
 cd /home/user/kompaktlivelab23/prework
-sh prework.sh
+bash prework.sh
 ```
 ***Es wird die Eingabe des Passworts für "user" verlangt. Dieses lautet "Netapp1!".***
 # :trident: Scenario 01 - storage classes, persistent volumes & persistent volume claims 
 ____
-**Remember: All required files are in the folder */root/storagews/scenario01* please ensure that you are in this folder now. You can do this with the command** 
+**Remember: All required files are in the folder */home/user/kompaktlivelab23/scenario01* please ensure that you are in this folder now. You can do this with the command** 
 ```console
-cd /root/storagews/scenario01
+cd /home/user/kompaktlivelab23/scenario01
 ```
 ____
 In this scenario, you will create two StorageClasses, discovery their capabilities, create PVCs and do some basic troubleshooting. 
@@ -305,9 +298,9 @@ kubectl delete ns ghost
 
 # :trident: Scenario 02 - running out of space? Let's expand the volume 
 ____
-**Remember: All required files are in the folder */root/storagews/scenario02* please ensure that you are in this folder now. You can do this with the command** 
+**Remember: All required files are in the folder */home/user/kompaktlivelab23/scenario02* please ensure that you are in this folder now. You can do this with the command** 
 ```console
-cd /root/storagews/scenario02
+cd /home/user/kompaktlivelab23/scenario02
 ```
 ____
 Sometimes you need more space than you thought before. For sure you could create a new volume, copy the data and work with the new bigger PVC but it is way easier to just expand the existing.
@@ -401,9 +394,9 @@ kubectl delete namespace resize
 
 # :trident: Scenario 03 -  snapshots, clones etc 
 ___
-**Remember: All required files are in the folder */root/storagews/scenario03*. Please ensure that you are in this folder. You can do this with the command** 
+**Remember: All required files are in the folder */home/user/kompaktlivelab23/scenario03*. Please ensure that you are in this folder. You can do this with the command** 
 ```console
-cd /root/storagews/scenario03
+cd /home/user/kompaktlivelab23/scenario03
 ```
 ___
 CSI Snapshots have been promoted GA with Kubernetes 1.20.  
@@ -570,9 +563,9 @@ kubectl delete ns busybox
 
 # :trident: Scenario 04 - Consumption control 
 ___
-**Remember: All required files are in the folder */root/storagews/scenario04*. Please ensure that you are in this folder. You can do this with the command**
+**Remember: All required files are in the folder */home/user/kompaktlivelab23/scenario04*. Please ensure that you are in this folder. You can do this with the command**
 ```console
-cd /root/storagews/scenario04
+cd /home/user/kompaktlivelab23/scenario04
 ```
 ___
 There are many different ways to control the storage consumption. We will focus on the possibilities of K8s itself. However please remember: Sometimes the same thing can also be achieved at storage or csi driver level and it might be preferred to do it there.
@@ -695,9 +688,9 @@ kubectl apply -n control -f pvc-5Gi-1.yaml
 Magical, right? By the way, the NetApp Trident CSI driver from this lab has a similar parameter called _limitVolumeSize_ that controls the maximum capacity of a PVC per Trident Backend. As we told you: sometimes there are multiple ways to achieve the same result. 
 # :trident: Scenario 05 - About Generic Ephemeral Volumes
 ___
-**Remember: All needed files are in the folder */root/storagews/scenario05*. Please ensure that you are in this folder. You can do this with the command**
+**Remember: All needed files are in the folder */home/user/kompaktlivelab23/scenario05*. Please ensure that you are in this folder. You can do this with the command**
 ```console
-cd /root/storagews/scenario05
+cd /home/user/kompaktlivelab23/scenario05
 ```
 ___
 When talking about CSI drivers in K8s, we often refer to Persistent Volumes. It is indeed the most common use of such CSI driver. There are multiple benefits of using persistent volumes, one of them being that the volumes remains after the application is gone (ya, that is actually why it is called _persistent_).  

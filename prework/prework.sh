@@ -149,8 +149,6 @@ cd /home/user/kompaktlivelab23/prework/
 rke1
 tridentctl -n trident create backend -f rke1_trident_svm1_san_backend.json
 tridentctl -n trident create backend -f rke1_trident_svm1_san_eco_backend.json
-kubectl create -f rke1_sc_san.yaml
-kubectl create -f rke1_sc_saneco.yaml
 
 echo "#######################################################################################################"
 echo "ADD NEW TRIDENT BACKENDS & SC ON RKE2"
