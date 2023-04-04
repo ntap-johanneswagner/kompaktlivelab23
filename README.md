@@ -148,7 +148,7 @@ Note, as we defined the the sc-san-svm1 as default StorageClass, we now have two
 kubectl patch storageclass sc-san-svm1 -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
 ```
 
-If you want to see more details a *describe* will provide them. Let's do this
+You should now only have one StorageClass marked as default, verify it and continue. 
 
 ## 2. PVCs & PVs
 
@@ -207,7 +207,7 @@ spec:
   resources:
     requests:
       storage: 5Gi
-  storageClassName: storage-class-nas
+  storageClassName: sc-nas-svm1
 ```
 Apply the pvc again
 
@@ -228,9 +228,9 @@ kubectl get pvc -n funwithpvcs
 
 
 ```sh
-     NAME        STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                AGE
-    firstpvc    Bound    pvc-eb00c989-fddb-4224-aa56-a8918064b9fb   5Gi        RWO            storage-class-san           16m
-    secondpvc   Bound    pvc-50f6c56b-3575-43b3-ae16-5b99b35d9a59   5Gi        RWX            storage-class-nas           8s
+    NAME        STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                AGE
+    firstpvc    Bound    pvc-eb00c989-fddb-4224-aa56-a8918064b9fb   5Gi        RWO            sc-san-svm1           16m
+    secondpvc   Bound    pvc-50f6c56b-3575-43b3-ae16-5b99b35d9a59   5Gi        RWX            sc-nas-svm1           8s
 ```
 
 Earlier we mentioned that a *PersistentVolume* is also created. Maybe you ask yourself where to see them. It is pretty easy, let's have a look at our recently created ones:
@@ -241,8 +241,8 @@ kubectl get pv
 
 ```sh
     NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                   STORAGECLASS        REASON   AGE
-    pvc-0e860943-3fae-4dae-80e9-82e2259089c8   5Gi        RWX            Delete           Bound    funwithpvcs/secondpvc   storage-class-nas            99s
-    pvc-4adaf625-fc86-42e8-a481-92b02addfdbc   5Gi        RWO            Retain           Bound    funwithpvcs/firstpvc    storage-class-san            2m43s
+    pvc-0e860943-3fae-4dae-80e9-82e2259089c8   5Gi        RWX            Delete           Bound    funwithpvcs/secondpvc   sc-san-svm1            99s
+    pvc-4adaf625-fc86-42e8-a481-92b02addfdbc   5Gi        RWO            Retain           Bound    funwithpvcs/firstpvc    sc-nas-svm1            2m43s
 ```
 
 You remember the ReclaimPolicy we definied in our StorageClass? We can see here that pur PVs have different policies. Let's delete both PVCs and see what happens.
