@@ -1,4 +1,5 @@
 #!/bin/bash
+shopt -s expand_aliases
 alias rke1='export KUBECONFIG=/home/user/kubeconfigs/rke1/kube_config_cluster.yml'
 alias rke2='export KUBECONFIG=/home/user/kubeconfigs/rke2/kube_config_cluster.yml'
 
