@@ -852,7 +852,10 @@ connecting to: pacman
 As a great wise man would say: "oh oh !"  
 
 No worries, you did all the necessary to protect your application.  
-In my case, I can simply perform an _in place restore_ operation from the first manual backup we took.  
+In your case, you can simply perform an _in place restore_ operation from the first manual backup you took.
+
+For this, enter the pacman application again, go to *Data protection*, choose *backups* and click on *Restore application*.  
+<p align="center"><img src="Images/restore/backup1.png" width="640"></p>
 
 <p align="center"><img src="Images/restore/2_in_place_restore.png" width="640"></p>
 
