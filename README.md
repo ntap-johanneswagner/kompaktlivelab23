@@ -746,6 +746,8 @@ Magical, right? By the way, the NetApp Trident CSI driver from this lab has a si
 ___
 **This time, no files are needed, all information are in the guide**
 
+You remember the Pac-Man application we've created earlier? The one with the very very important highscore data? Having the data stored in persistent volumes is only the half of a good data management. We have also to ensure that if bad things are happening, we can recover from them. For this we will use Astra Control Centern (short ACC).   
+
 We will use Astra Control Center to create :
 - a manual snapshot (ie on-demand)
 - a manual backup (ie on-demand)
@@ -865,7 +867,7 @@ After a few minutes, there you go, the famous high scores are back !
 
 # :trident: The End :trident:
 
-Thank you for participating in this workshop. We hope it was fun and you've learned something. We tried to cover the basics, there is a lot more to learn and talk. If you want to discuss further, come to our booth or feel free to reach out to us online
+Thank you for participating in this NetApp Kompakt LiveLab. We hope it was fun and you've learned something. We tried to cover the basics, there is a lot more to learn and talk. If you want to discuss further, cfeel free to reach out to us online or contact your NetApp Account Team and ask them to schedule a meeting with us.
 
 Hendrik Land: [Linkedin](https://www.linkedin.com/in/hendrik-land/) / [E-Mail](mailto:hendrik.land@netapp.com)
 
