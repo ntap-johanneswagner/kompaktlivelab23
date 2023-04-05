@@ -803,7 +803,7 @@ Now you have to go to the Execution Hooks section and add a new one:
 
 <p align="center"><img src="Images/protect/app2.png" width="640"></p>
 
-You could decide to apply hooks to all containers of an application, or just specific containers with a filtering option. We will choose the latter & filter on _.*mongo.*_ in order to manage the database. Create two hooks, one for pre-snapshot and one for post-snapshot  
+You could decide to apply hooks to all containers of an application, or just specific containers with a filtering option. We will choose the latter & filter on `.*mongo.*` in order to manage the database. Create two hooks, one for pre-snapshot and one for post-snapshot  
 
 <p align="center"><img src="Images/protect/app3.png" width="640"></p>   
 
