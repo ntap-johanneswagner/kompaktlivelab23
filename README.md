@@ -827,20 +827,10 @@ It takes a little bit more time (couple of minutes) to complete, as there is dat
 Nonetheless, we end up with a healthy backup.
 <p align="center"><img src="Images/protect/10_ACC_Backup_status.png" width="640"></p>
 
-Last, as we have 2 separate Rancher clusters, as well as 2 separate ONTAP clusters, let's put in place a DRP (ie _Disaster Recovery Protocol_) for our favorite application. We are never too safe, and a whole datacenter or zone could fail ! Imagine, no more pacman !! Astra Control gives you the possibility to restart a whole app in such event in a different cluster.  
-
-Configuring this DRP is done with several parameters:
-- what _secondary_ cluster will host the mirror
-- what _storage class_ will be used to provision persistent volumes
-- what _schedule_ is used to mirror data (using NetApp _SnapMirror_ feature)
-<p align="center"><img src="Images/protect/11_ACC_Replication_creation_setup.png" width="640"></p>
-
-It also take a few minutes to complete, as the initialization of the mirror involved copying all the data to the secondary system. All subsequent updates will only transfer the newly written blocks.  
-Once done, you will get a healthy DRP environment for pacman !
-<p align="center"><img src="Images/protect/12_ACC_Replication_status.png" width="512"></p>
-
-With _snapshots_, _backups_ and _DRP_ configured, now Pacman is protected from all evil !
+With _snapshots_, _backups_ configured, now Pacman is protected from all evil !
 <p align="center"><img src="Images/protect/13_ACC_Pacman_final_status.png" width="640"></p>
+
+In addition to snapshots and backups, Astra Control Center is also offering a replication for DR purposes. Due to time constraints we are not covering this in the LiveLab
 
 Now let's brake some stuff and recover it.
 
