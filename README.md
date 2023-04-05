@@ -503,13 +503,7 @@ Aside from the 3 CRDs & the Controller StatefulSet, the following objects have a
 - role.rbac.authorization.k8s.io/snapshot-controller-leaderelection
 - rolebinding.rbac.authorization.k8s.io/snapshot-controller-leaderelection
 
-Finally, you need to create a *VolumeSnapshotClass* object that connects the snapshot capability with the Trident CSI driver.
-
-```console
-kubectl apply -f sc-volumesnapshot.yaml
-```
-
-You can see this *VolumeSnapshotClass* with the following command:
+Finally, you need to have a *VolumeSnapshotClass* object that connects the snapshot capability with the Trident CSI driver. In this Lab there is already one:
 
 ```console
 kubectl get volumesnapshotclass

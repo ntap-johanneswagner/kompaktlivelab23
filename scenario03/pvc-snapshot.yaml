@@ -6,6 +6,6 @@ metadata:
     app.kubernetes.io/name: kompaktlivelab-scenario03
     app: busybox
 spec:
-  volumeSnapshotClassName: csi-snap-class
+  volumeSnapshotClassName: csi-snapclass
   source:
     persistentVolumeClaimName: mydata
