@@ -10,7 +10,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: storage-class-nas
+  storageClassName: sc-nas-svm1
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -24,7 +24,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: storage-class-nas
+  storageClassName: sc-nas-svm1
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -38,4 +38,4 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: storage-class-nas
+  storageClassName: sc-nas-svm1
