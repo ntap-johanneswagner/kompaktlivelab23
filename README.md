@@ -366,7 +366,7 @@ First let's check the StorageClasses
 kubectl get sc 
 ```
 
-Look at the column *ALLOWVOLUMEEXPANSION*. As we specified earlier, both StorageClasses are set to *true*, which means PVCs that are created with this StorageClass can be expanded.  
+Look at the column *ALLOWVOLUMEEXPANSION*. As we specified earlier, all StorageClasses are set to *true*, which means PVCs that are created with this StorageClass can be expanded.  
 NFS Resizing was introduced in K8S 1.11, while iSCSI resizing was introduced in K8S 1.16 (CSI)
 
 Now let's create a PVC and a Centos POD using this PVC, in their own namespace called *resize".
@@ -531,10 +531,10 @@ The last line will provide you an output of our example environment. There shoul
 Before we create a snapshot, let's write some data into our volume.  
 
 ```console
-kubectl exec -n busybox $(kubectl get pod -n busybox -o name) -- sh -c 'echo "KCDUK 2022 is fun" > /data/test.txt'
+kubectl exec -n busybox $(kubectl get pod -n busybox -o name) -- sh -c 'echo "NetApp Kompakt Live Lab 2023 is fun. I will never use anything other than Astra Trident for persistent storage in K8s" > /data/test.txt'
 ```
 
-This creates the file test.txt and writes "KCDUK 2022 is fun" into it. You can verify the file contents:
+This creates the file test.txt and writes "NetApp Kompakt Live Lab 2023 is fun. I will never use anything other than Astra Trident for persistent storage in K8s" into it. You can verify the file contents:
 
 ```console
 kubectl exec -n busybox $(kubectl get pod -n busybox -o name) -- more /data/test.txt
@@ -610,7 +610,7 @@ Tadaaa, you have restored your data!
 Keep in mind that some applications may need some extra care once the data is restored (databases for instance). In a production setup you'll likely need a more full-blown backup/restore solution.  
 
 
-As in every scenario, a little clean up at the end:
+Now, a little clean up at the end:
 
 ```console
 kubectl delete ns busybox
