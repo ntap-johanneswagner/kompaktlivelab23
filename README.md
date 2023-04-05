@@ -782,6 +782,7 @@ You could paste the code directly from your clipboard or just upload a ready scr
 The Verda repository is cloned to the user directory of the jumphost, so we can upload the script from an existing file. It is located at /user/Verda/MongoDB
 
 <p align="center"><img src="Images/protect/scripts3.png" width="640"></p>
+<p align="center"><img src="Images/protect/scripts5.png" width="640"></p>
 
 After a click on "Add", you should now see the added script in your Account
 
