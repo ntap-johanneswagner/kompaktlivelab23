@@ -861,7 +861,7 @@ For this, enter the pacman application again, go to *Data protection*, choose *b
 <p align="center"><img src="Images/restore/2_in_place_restore.png" width="640"></p>
 
 When clicking on _Next_, you will also need to confirm the restore operation, as you will replace the existing content with the backup.  
-After a few minutes, there you go, the famous high scores are back !
+After a few minutes, there you go, the famous high scores are back ! It might be that the IP adress of the pacman app is changed as we did a complete restore of the application. Just do a `kubectl get svc -n pacman` to verify that you are trying to access the right IP.
 
 <p align="center"><img src="Images/restore/3_pacman_scores.png" width="512"></p>
 
