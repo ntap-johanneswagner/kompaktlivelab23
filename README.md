@@ -266,7 +266,7 @@ Awesome, you are now able to request storage...but as long as no appliaction is 
 
 As you can see in the architecture picture, this app consists out of several parts. 
 There are two services. One will expose the mongodb to the network, the other will expose the app to the network. Then we have our two deployments, one for the mongo-db the other is the application. Last but not least, our pvc where we ask for persistent storage, that is consumed by the mongo-db to store our very valuable data.
-To make it more verbose for you, we've splitted all the parts into seperate files that are in your working directory and start with pacman-...
+To make it more verbose for you, we've splitted all the parts into seperate files that are in your working directory and start with pacman-... We will start with deploying the database and then continue with the application itself.
 
 First we need a place where Pac-Man can live. In Kubernetes, this is the namespace.
 
@@ -289,11 +289,35 @@ You can verfiy that the pvc is there and bound:
 kubectl get pvc -n pacman
 ```
 
-Now as the PVC is there, Have a look at the files for the deployment and create them afterwards:
+Now as the PVC is there, have a look at the file for the database deployment and create it afterwards:
 
 ```console
 cat pacman-mongodb-deployment.yaml
 kubectl apply -f pacman-mongodb-deployment.yaml -n pacman
+```
+
+You should be able to see the container running:
+
+```console
+kubectl get pods -n pacman
+```
+
+We have a running container, we have storage for the mongodb, now we need a service that the app can access the database. Have a look at the file and create them afterwards:
+
+```console
+cat pacman-mongodb-service.yaml
+kubectl apply -f pacman-mongodb-service.yaml -n pacman
+```
+
+You should have now one service in your namespace:
+
+```console
+kubectl get svc -n pacman
+```
+
+Let's continue with the pacman application, we will start with the deployment, as there is no need for storage (remeber: we will store the data in the database). Have look at the file for the deployment and create it afterwards:
+
+```console
 cat pacman-app-deployment.yaml
 kubectl apply -f pacman-app-deployment.yaml -n pacman
 ```
@@ -304,49 +328,28 @@ You should be able to see the containers running:
 kubectl get pods -n pacman
 ```
 
-We have running containers, we have storage for the mongodb, to bring all together and access it we finally need two services. Have a look at the files and create them afterwards:
+We have running containers, we have storage for the mongodb, we have connection between mongodb and the pacman application guess what is missing: A service to access pacman. Have a look at the files for the service and create it afterwards:
 
 ```console
-cat pacman-mongodb-service.yaml
-kubectl apply -f pacman-mongodb-service.yaml -n pacman
 cat pacman-app-service.yaml
 kubectl apply -f pacman-app-service.yaml -n pacman
 ```
 
-Let's have look at the services:
+Finaly let's check the services:
 
 ```console
 kubectl get svc -n pacman
 ```
 
-
-
-You can see a summary of what you've done with the following command:
-
 ```console
-kubectl get -n ghost all,pvc,pv
-```
-
-It takes about 40 seconds for the POD to be in a running state The Ghost service is configured with a NodePort type, which means you can access it from every node of the cluster on port 30080.   
-Give it a try ! => Open the Browser in your Lab environment and go to http://192.168.0.63:30080
-
-Let's see if the */var/lib/ghost/content* folder is indeed mounted to the NFS PVC that was created.
-
+NAME     TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)           AGE
+mongo    LoadBalancer   172.26.223.182   192.168.0.215   27017:30967/TCP   16s
+pacman   LoadBalancer   172.26.164.251   192.168.0.216   80:30552/TCP      14s
 ```console
-kubectl exec -n ghost $(kubectl -n ghost get pod -o name) -- df /var/lib/ghost/content
-```
 
-You should be able to see that it is mounted. Let's have a look into the folder
+In my example, Pac-Man recieved the external IP 192.168.0.216. This IP adress may vary in your environment. Take the IP adress from your output, open the webbrowser in your jumphost and try to access Pac-Man
 
-```console
-kubectl exec -n ghost $(kubectl -n ghost get pod -o name) -- ls /var/lib/ghost/content
-```
-
-The data is there, perfect. If you want to, you can easily clean up a little bit before you start with the next scenario:
-
-```console
-kubectl delete ns ghost
-```
+Have some fun, create some highscore, we will need that in a later lab.
 
 # :trident: Scenario 02 - running out of space? Let's expand the volume 
 ____
