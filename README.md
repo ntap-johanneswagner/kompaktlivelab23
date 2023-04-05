@@ -742,7 +742,7 @@ Magical, right? By the way, the NetApp Trident CSI driver from this lab has a si
 # :trident: Scenario 05 - Protect& Recover your application with Astra Control Center 
 ___
 **This time, no files are needed, all information are in the guide**
-
+___
 You remember the Pac-Man application we've created earlier? The one with the very very important highscore data? Having the data stored in persistent volumes is only the half of a good data management. We have also to ensure that if bad things are happening, we can recover from them. For this we will use Astra Control Centern (short ACC).   
 
 We will use Astra Control Center to create :
