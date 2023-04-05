@@ -741,69 +741,6 @@ kubectl apply -n control -f pvc-5Gi-1.yaml
 ```
 
 Magical, right? By the way, the NetApp Trident CSI driver from this lab has a similar parameter called _limitVolumeSize_ that controls the maximum capacity of a PVC per Trident Backend. As we told you: sometimes there are multiple ways to achieve the same result. 
-# :trident: Scenario 05 - About Generic Ephemeral Volumes
-___
-**Remember: All needed files are in the folder */home/user/kompaktlivelab23/scenario05*. Please ensure that you are in this folder. You can do this with the command**
-```console
-cd /home/user/kompaktlivelab23/scenario05
-```
-___
-When talking about CSI drivers in K8s, we often refer to Persistent Volumes. It is indeed the most common use of such CSI driver. There are multiple benefits of using persistent volumes, one of them being that the volumes remains after the application is gone (ya, that is actually why it is called _persistent_).  
-
-For some use cases, you may need a volume for your application to store files that are absolutely not important & can be deleted alongside the application when you dont need it anymore. That is where Ephemeral Volumes could be useful.
-
-Kubernetes proposes different types of ephemeral volumes:
-
-- emptyDir
-- configMap
-- CSI ephemeral volumes 
-- **generic ephemeral volumes** 
-
-This chapter focuses on the last category which was introduced as an alpha feature in Kubernetes 1.19 (Beta in K8S 1.21 & GA in K8S 1.23).  
-
-The construct of a POD manifest with Generic Ephemeral Volumes is pretty similar to what you would see with StatefulSets, ie the volume definition is included in the POD object. This folder contains a simple busybox pod manifest. You will see that :
-
-- a volume is created alongside the POD that will mount it
-- when the POD is deleted, the volume follows the same path & disappears
-
-First let's create our app:
-
-```console
-kubectl apply -f my-app.yaml
-```
-
-Now discover what has happened:
-
-```console
-kubectl get pod,pvc
-```
-
-Can we see the mount?
-
-```console
-kubectl exec my-app -- df -h /scratch
-```
-
-Can we write to it?
-
-```console
-kubectl exec my-app  -- sh -c 'echo "Hello ephemeral volume" > /scratch/test.txt'
-```
-
-Is the input really saved?
-
-```console
-kubectl exec my-app  -- more /scratch/test.txt
-```
-
-Nice. What happens if we delete the app now?
-
-```console
-kubectl delete -f my-app.yaml
-kubectl get pod,pvc
-```
-
-Note that creating this kind of pod does not display a _pvc created_ message. 
 
 # :trident: The End :trident:
 
