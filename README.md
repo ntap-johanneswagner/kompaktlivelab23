@@ -7,16 +7,13 @@ You will connect to a Linux jumphost from which you can access the training envi
 It will provide you two K8s clusters, two ONTAP Clusters,Tridend with preconfigured backend and a preconfigured nas storageclass.
 ## Prework
 
-# !!!!!!1. Wie wollen wir den Benutzernamen verteilen????:  
-<span style="color:green">***Prepare a document with the usernames you recieved from the LoD Team and place a link here***</span>
-
-2. Access the lab environment:  
+1. Access the lab environment:  
 https://lod-bootcamp.netapp.com  
 <span style="color:red">Please ignore the Lab Guide that is provided there and use this one</span>
 
-3. Request the lab *Cloud-native Applications with Astra Control Center v1.3* and connect to the jumphost 
+2. Request the lab *Cloud-native Applications with Astra Control Center v1.3* and connect to the jumphost 
 
-4. Open a terminal    
+3. Open a terminal    
 
 4. We've prepared some exercises for you that are hosted in a github repo. To have them available on your training environment, please create a directory, enter it and clone the repo with the following commands:  
 <span style="color:green">***prepare a git repo for your workshop and use it below***</span>
@@ -27,7 +24,7 @@ git clone https://github.com/ntap-johanneswagner/kompaktlivelab23
 
 You should now have several directories available. The lab is structured with different scenarios. Everything you need is placed in a folder with the same name. 
 
-6. As this lab is used for different things and has a lot of stuff in it that might be confusing, please run this little cleanup script which removes all things you don't need in this workshop, updates the environment to a recent version and creates some necessary stuff.   
+5. As this lab is used for different things and has a lot of stuff in it that might be confusing, please run this little cleanup script which removes all things you don't need in this workshop, updates the environment to a recent version and creates some necessary stuff.   
 Please run the following commands:  
 **You will be asked to enter the password for user during the script. It is "Netapp1!"**
 
