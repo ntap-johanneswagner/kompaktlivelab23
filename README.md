@@ -1,7 +1,7 @@
 # :trident: Everything you always wanted to know about storage in Kubernetes (But were too afraid to ask) 
 
 # Introduction
-You will work in the NetApp Lab on Demand environment, but we`ve prepared some more resources for you than the typical lab guide offers. Before you can start, there are some preparations to do.
+You will work in the NetApp Lab on Demand environment, but we`ve prepared some more resources for you than the typical lab guide offers. A special thanks to our dear trusted colleague Yves Weisser (https://github.com/YvosOnTheHub) who created a lot of the code we are using in this lab. Before you can start, there are some preparations to do.
 
 You will connect to a Linux jumphost from which you can access the training environment.
 It will provide you two K8s clusters, two ONTAP Clusters,Tridend with preconfigured backend and a preconfigured nas storageclass.
@@ -741,6 +741,11 @@ kubectl apply -n control -f pvc-5Gi-1.yaml
 ```
 
 Magical, right? By the way, the NetApp Trident CSI driver from this lab has a similar parameter called _limitVolumeSize_ that controls the maximum capacity of a PVC per Trident Backend. As we told you: sometimes there are multiple ways to achieve the same result. 
+
+# :trident: Scenario 05 - Protect& Recover your application with Astra Control Center 
+___
+**This time, no files are needed, all information are in the guide**
+
 
 # :trident: The End :trident:
 
