@@ -828,7 +828,7 @@ Nonetheless, we end up with a healthy backup.
 <p align="center"><img src="Images/protect/10_ACC_Backup_status.png" width="640"></p>
 
 With _snapshots_, _backups_ configured, now Pacman is protected from all evil !
-<p align="center"><img src="Images/protect/13_ACC_Pacman_final_status.png" width="640"></p>
+<p align="center"><img src="Images/protect/protected.png" width="640"></p>
 
 In addition to snapshots and backups, Astra Control Center is also offering a replication for DR purposes. Due to time constraints we are not covering this in the LiveLab
 
