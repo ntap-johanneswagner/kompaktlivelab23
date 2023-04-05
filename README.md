@@ -838,7 +838,7 @@ We currently are in a safe zone. Pacman is running. Snapshots & backups are plan
 Similarly to most fairy tales, an evil person joins the party !
 
 ```bash
-$ rke2
+$ rke1
 $ kubectl exec -it -n pacman $(kubectl get pod -n pacman -l "name=mongo" -o name) -- mongo --eval 'db.highscore.updateMany({},{$set:{name:"EVIL",cloud:"YOU",zone:"HAVE BEEN",host:"HACKED",score:"666"}});' pacman
 MongoDB shell version: 3.2.21
 connecting to: pacman
