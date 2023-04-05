@@ -236,29 +236,12 @@ secondpvc   Bound    pvc-e3ec31a7-abf4-4223-a12d-3fc674e03cb9   5Gi        RWX  
 Earlier we mentioned that a *PersistentVolume* is also created. Maybe you ask yourself where to see them. It is pretty easy, let's have a look at our recently created ones:
 
 ```console
-kubectl get pv
+kubectl get pv | grep funwithpvcs
 ```
 
 ```sh
-NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                                                       STORAGECLASS      REASON   AGE
-pvc-2a044a6e-58fa-49c1-aa0b-6b37f15bd250   50Gi       RWO            Delete           Bound    netapp-acc/influxdb2                                        sc-nas-svm1                367d
-pvc-354483f6-45e6-46ea-b4fb-8378976b7ba8   50Gi       RWO            Delete           Bound    netapp-acc/datadir-polaris-mongodb-0                        sc-nas-svm1                367d
-pvc-542ed6d9-6df6-4d00-8bea-57f0de4999ad   5Gi        RWO            Retain           Bound    funwithpvcs/firstpvc                                        sc-san-eco-svm1            7m18s
-pvc-6af6429c-c42f-45bc-b470-4ce4c6e2bc11   50Gi       RWO            Delete           Bound    netapp-acc/datadir-polaris-mongodb-2                        sc-nas-svm1                367d
-pvc-89b16434-2f22-4f1d-ad6c-8b8931e2e0e8   8Gi        RWO            Delete           Bound    jenkins/jenkins                                             sc-nas-svm1                215d
-pvc-94bf74cd-3d3f-4043-8c27-9c595b68c6d2   10Gi       RWO            Delete           Bound    netapp-acc/data-netapp-acc-polaris-consul-consul-server-0   sc-nas-svm1                367d
-pvc-9889a8b7-33e1-4f99-bec8-21704d8d02db   8Gi        RWO            Delete           Bound    wordpress/data-wordpress-mariadb-0                          sc-nas-svm1                367d
-pvc-a7570ce6-a485-4288-8d84-ef8914d62e50   10Gi       RWO            Delete           Bound    netapp-acc/data-netapp-acc-polaris-consul-consul-server-1   sc-nas-svm1                367d
-pvc-a9973c15-7d54-42a2-b88f-918b5dc309db   50Gi       RWO            Delete           Bound    netapp-acc/asup-pv-claim                                    sc-nas-svm1                367d
-pvc-aae8cc7c-f6b2-4c20-ae84-929debb3e13b   50Gi       RWO            Delete           Bound    netapp-acc/datadir-polaris-mongodb-1                        sc-nas-svm1                367d
-pvc-b6b8f0e9-2b2e-40cb-8a8f-3a73a31b34a6   50Gi       RWO            Delete           Bound    netapp-acc/storage-loki-0                                   sc-nas-svm1                367d
-pvc-d5d3822e-f493-43cd-b50a-869bd4f622cb   10Gi       RWO            Delete           Bound    wordpress/wordpress                                         sc-nas-svm1                215d
-pvc-dda6faaf-eceb-4c07-ac44-f1502187a692   8Gi        RWO            Delete           Bound    netapp-acc/data-polaris-keycloak-db-0                       sc-nas-svm1                120d
-pvc-e3ec31a7-abf4-4223-a12d-3fc674e03cb9   5Gi        RWX            Delete           Bound    funwithpvcs/secondpvc                                       sc-nas-svm1                3m17s
-pvc-eb9d6fa7-dde3-4526-8d46-c503d1fe2f0c   10Gi       RWO            Delete           Bound    netapp-acc/data-netapp-acc-polaris-consul-consul-server-2   sc-nas-svm1                367d
-pvc-ede1a348-b4e8-4d75-9eb3-dd28cb9b652f   8Gi        RWO            Delete           Bound    netapp-acc/data-polaris-keycloak-db-1                       sc-nas-svm1                120d
-pvc-fc0402b9-37c8-49ca-8333-66d35642f984   8Gi        RWO            Delete           Bound    netapp-acc/data-polaris-keycloak-db-2                       sc-nas-svm1                120d
-
+pvc-05e82aee-759a-42a5-9bea-e85cdbea9f8b   5Gi        RWO            Retain           Bound    funwithpvcs/firstpvc                                        sc-san-eco-svm1            85s
+pvc-d5db069f-e7a8-45f6-bd78-11a11dd9f178   5Gi        RWX            Delete           Bound    funwithpvcs/secondpvc                                       sc-nas-svm1                82s
 ```
 
 You remember the ReclaimPolicy we definied in our StorageClass? We can see here that pur PVs have different policies. Let's delete both PVCs and see what happens.
@@ -271,40 +254,72 @@ kubectl delete -f secondpvc.yaml -n funwithpvcs
 Let's have a look at PVCs and PVs now 
 
 ```console
-kubectl get pvc,pv -n funwithpvcs
+kubectl get pvc -n funwithpvcs
+kubectl get pv | grep funwithpvcs
 ```
 
 Magic, both PVCs are gone (well... we advised k8s to remove them...) but one PV is still there? No not real magic, just the normal behaviour of the specified ReclaimPolicy. As described before, the default ReclaimPolicy is *Delete*. This means as soon as the corresponding PVC is deleted, the PV will be deleted too. In some use cases this would delete valuable data. To avoid this, you can set the ReclaimPolicy to *Retain*. If the PVC is deleted now, the PV will change its Status from *Bound* to *Released*. The PV could be used again.  
 
-Awesome, you are now able to request storage...but as long as no appliaction is using that, there is no real sense of having persistent storage. Let's create an application that is able to do something with the storage. For this purpose we will use *Ghost* a light weight web blog. There are some files in our scenario01 directory:
+Awesome, you are now able to request storage...but as long as no appliaction is using that, there is no real sense of having persistent storage. Let's create an application that is able to do something with the storage. We don't want to show just the next Wordpress Demo and we want to have some fun. Due to this, we will now bring Pac-Man to Kubernetes.  
 
-- ghost-pvc.yaml to manage the persistent storage of this app
-- ghost-deployment.yaml that will define how to manage the app
-- ghost-service.yaml to expose the app
+<p align="center"><img src="Images/1_pacman_architecture.png" width="512"></p>
 
-You are going to create this app in its own namespace which will be *ghost*. You will use the StorageClass for nas.
+As you can see in the architecture picture, this app consists out of several parts. 
+There are two services. One will expose the mongodb to the network, the other will expose the app to the network. Then we have our two deployments, one for the mongo-db the other is the application. Last but not least, our pvc where we ask for persistent storage, that is consumed by the mongo-db to store our very valuable data.
+To make it more verbose for you, we've splitted all the parts into seperate files that are in your working directory and start with pacman-...
+
+First we need a place where Pac-Man can live. In Kubernetes, this is the namespace.
 
 ```console
-kubectl create namespace ghost
+kubectl create namespace pacman
 ```
+
+Now let's start with deploying the storage we need for the mongo-db. Take a look at the file and create it afterwars
 
 Have a look at the file for the pvc and create it afterwards:
 
 ```console
-kubectl apply -f ghost-pvc.yaml -n ghost
+cat pacman-mongodb-pvc.yaml
+kubectl apply -f pacman-mongodb-pvc.yaml -n pacman
 ```
 
-Now as the PVC is there, Have a look at the file for the deployment and create it afterwards:
+You can verfiy that the pvc is there and bound:
 
 ```console
-kubectl apply -f ghost-deploy.yaml -n ghost
+kubectl get pvc -n pacman
 ```
 
-We have an app, we have storage for the app, to access it we finally need a service:
+Now as the PVC is there, Have a look at the files for the deployment and create them afterwards:
 
 ```console
-kubectl apply -f ghost-service.yaml -n ghost
+cat pacman-mongodb-deployment.yaml
+kubectl apply -f pacman-mongodb-deployment.yaml -n pacman
+cat pacman-app-deployment.yaml
+kubectl apply -f pacman-app-deployment.yaml -n pacman
 ```
+
+You should be able to see the containers running:
+
+```console
+kubectl get pods -n pacman
+```
+
+We have running containers, we have storage for the mongodb, to bring all together and access it we finally need two services. Have a look at the files and create them afterwards:
+
+```console
+cat pacman-mongodb-service.yaml
+kubectl apply -f pacman-mongodb-service.yaml -n pacman
+cat pacman-app-service.yaml
+kubectl apply -f pacman-app-service.yaml -n pacman
+```
+
+Let's have look at the services:
+
+```console
+kubectl get svc -n pacman
+```
+
+
 
 You can see a summary of what you've done with the following command:
 
