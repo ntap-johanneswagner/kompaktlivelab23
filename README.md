@@ -788,8 +788,21 @@ After a click on "Add", you should now see the added script in your Account
 
 <p align="center"><img src="Images/protect/scripts4.png" width="640"></p>
 
-Let's create a _pre-snapshot_ & a _post-snapshot_ hooks for the MongoDB in the pacman app as this is the underlying database used to store the scores of this game. You could decide to apply hooks to all containers of an application, or just specific containers with a filtering option. We will choose the latter & filter on _mongo_ in order to manage the database.  
-<p align="center"><img src="Images/protect/3_ACC_Mongo_Hooks_Setup.png" width="640"></p>
+Let's create a _pre-snapshot_ & a _post-snapshot_ hooks for the MongoDB in the pacman app as this is the underlying database used to store the scores of this game. 
+
+First you have to go back to the application and access its details:
+
+<p align="center"><img src="Images/protect/app1.png" width="640"></p>
+
+Now you have to go to the Execution Hooks section and add a new one:
+
+<p align="center"><img src="Images/protect/app2.png" width="640"></p>
+
+You could decide to apply hooks to all containers of an application, or just specific containers with a filtering option. We will choose the latter & filter on _.*mongo.*_ in order to manage the database. Create two hooks, one for pre-snapshot and one for post-snapshot  
+
+<p align="center"><img src="Images/protect/app3.png" width="640"></p>   
+
+<p align="center"><img src="Images/protect/app4.png" width="640"></p>
 
 Once done, you can see that the hooks have been applied on the right container, with the _mongo:3.2_ image.
 <p align="center"><img src="Images/protect/4_ACC_Mongo_Hooks.png" width="640"></p>
