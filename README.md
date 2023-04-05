@@ -328,20 +328,21 @@ We have running containers, we have storage for the mongodb, we have connection 
 
 ```console
 cat pacman-app-service.yaml
-kubectl apply -f pacman-app-service.yaml -n pacman
+kubectl apply -f pacman-app-service.yaml -n pacman 
 ```
 
 Finaly let's check the services:
 
 ```console
 kubectl get svc -n pacman
-```
+```  
+
 
 ```console
 NAME     TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)           AGE
 mongo    LoadBalancer   172.26.223.182   192.168.0.215   27017:30967/TCP   16s
-pacman   LoadBalancer   172.26.164.251   192.168.0.216   80:30552/TCP      14s
-```console  
+pacman   LoadBalancer   172.26.164.251   192.168.0.216   80:30552/TCP      14s  
+```  
 
 In my example, Pac-Man recieved the external IP 192.168.0.216. This IP adress may vary in your environment. Take the IP adress from your output, open the webbrowser in your jumphost and try to access Pac-Man
 
