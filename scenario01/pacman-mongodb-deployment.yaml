@@ -16,7 +16,7 @@ spec:
         name: mongo
     spec:
       containers:
-      - image: mongo:3.2
+      - image: https://quay.io/repository/trident-mirror/kcduk/mongo:3.2
         imagePullPolicy: IfNotPresent
         name: mongo
         ports:
