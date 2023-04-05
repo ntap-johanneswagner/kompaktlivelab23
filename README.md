@@ -386,12 +386,12 @@ Finaly you should be able to see that the 5G volume is indeed mounted into the P
 kubectl -n resize exec busyboxfile -- df -h /data
 ```
 
-Resizing a PVC can be done in different ways. We will edit the definition of the PVC & manually modify it.  
+Resizing a PVC can be done in different ways. We will edit the original yaml file of the PVC & apply it again it.  
 Look for the *storage* parameter in the spec part of the definition & change the value (in this example, we will use 15GB)
 The provided command will open the pvc definition.
 
 ```console
-kubectl -n resize edit pvc pvc-to-resize-file
+vi pvc.yaml
 ```
 
 change the size to 15Gi like in this example:
@@ -408,6 +408,12 @@ spec:
 ```
 
 you can insert something by pressing "i", exit the editor by pressing "ESC", type in :wq! to save&exit. 
+
+After this just apply the pvc.yaml file again  
+
+```console
+kubectl apply -n resize -f pvc.yaml
+```
 
 Everything happens dynamically without any interruption. The results can be observed with the following commands:
 
