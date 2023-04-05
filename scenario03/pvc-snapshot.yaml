@@ -3,7 +3,7 @@ kind: VolumeSnapshot
 metadata:
   name: mydata-snapshot
   labels:
-    app.kubernetes.io/name: kcdlondon-scenario03
+    app.kubernetes.io/name: kompaktlivelab-scenario03
     app: busybox
 spec:
   volumeSnapshotClassName: csi-snap-class

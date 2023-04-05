@@ -3,7 +3,7 @@ apiVersion: v1
 metadata:
   name: mydata-from-snap
   labels:
-    app.kubernetes.io/name: kcdlondon-scenario03
+    app.kubernetes.io/name: kompaktlivelab-scenario03
     app: busybox
 spec:
   accessModes:
@@ -11,7 +11,7 @@ spec:
   resources:
     requests:
       storage: 10Gi
-  storageClassName: storage-class-nas
+  storageClassName: sc-nas-svm1
   dataSource:
     name: mydata-snapshot
     kind: VolumeSnapshot
