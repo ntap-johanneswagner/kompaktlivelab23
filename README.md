@@ -757,7 +757,7 @@ To access the UI, open the webbrowser and choose NetApp Astra Control Center
 
 <p align="center"><img src="Images/protect/accui.png" width="640"></p>
 
-To login use the username *admin@demo.netapp.com* and the password *"Netapp1!*
+To login use the username *admin@demo.netapp.com* and the password *Netapp1!*
 
 <p align="center"><img src="Images/protect/acclogin.png" width="640"></p>
 
@@ -769,7 +769,19 @@ Once you define this namespace as an ACC application, the first task run by ACC 
 Back to the applications screen of ACC, you will see a _healthy_ Pacman, which is however _not protected_ (just yet).
 <p align="center"><img src="Images/protect/2_ACC_Initial_status.png" width="640"></p>
 
-One of the many strengths of Astra Control is to integrate with the applications to protect, through hooks, in order to create consistent snapshots & backups. Some hooks are already available on this [link](https://github.com/NetApp/Verda). Let's create a _pre-snapshot_ & a _post-snapshot_ hooks for MongoDB, the underlying database used to store the scores of this game. You could decide to apply hooks to all containers of an application, or just specific containers with a filtering option. We will choose the latter & filter on _mongo_ in order to manage the database.  
+One of the many strengths of Astra Control is to integrate with the applications to protect, through hooks, in order to create consistent snapshots & backups. Some hooks are already available on this [link](https://github.com/NetApp/Verda). 
+You can add the scripts while creating a new hook or as they are global anyway, you can add them before creating a hook.
+Let's start to add a script for the mongo db hooks. 
+
+<p align="center"><img src="Images/protect/scripts1.png" width="640"></p>
+
+You could paste the code directly from your clipboard or just upload a ready script.
+
+<p align="center"><img src="Images/protect/scripts2.png" width="640"></p>
+
+The Verda repository is cloned to the user directory of the jumphost, so we can upload the script from an existing file. 
+
+Let's create a _pre-snapshot_ & a _post-snapshot_ hooks for MongoDB, the underlying database used to store the scores of this game. You could decide to apply hooks to all containers of an application, or just specific containers with a filtering option. We will choose the latter & filter on _mongo_ in order to manage the database.  
 <p align="center"><img src="Images/protect/3_ACC_Mongo_Hooks_Setup.png" width="640"></p>
 
 Once done, you can see that the hooks have been applied on the right container, with the _mongo:3.2_ image.
