@@ -1,4 +1,4 @@
-# :trident: Everything you always wanted to know about storage in Kubernetes (But were too afraid to ask) 
+# :trident: NetApp Kompakt Live Lab 2023 - Datenmanagement in Kubernetes
 
 # Introduction
 You will work in the NetApp Lab on Demand environment, but we`ve prepared some more resources for you than the typical lab guide offers. A special thanks to our dear trusted colleague Yves Weisser (https://github.com/YvosOnTheHub) who created a lot of the code we are using in this lab. Before you can start, there are some preparations to do.
@@ -16,7 +16,6 @@ https://lod-bootcamp.netapp.com
 3. Open a terminal    
 
 4. We've prepared some exercises for you that are hosted in a github repo. To have them available on your training environment, please create a directory, enter it and clone the repo with the following commands:  
-<span style="color:green">***prepare a git repo for your workshop and use it below***</span>
 ```console
 cd /home/user
 git clone https://github.com/ntap-johanneswagner/kompaktlivelab23
